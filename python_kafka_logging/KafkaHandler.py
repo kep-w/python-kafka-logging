@@ -25,9 +25,12 @@ class KafkaLoggingHandler(logging.Handler):
         try:
             # use default formatting
             msg = self.format(record)
-            if isinstance(msg, unicode):
-                msg = msg.encode("utf-8")
-
+            try:
+                if isinstance(msg, unicode):
+                    msg = msg.encode("utf-8")
+            except NameError:
+                if isinstance(msg, str):
+                    msg = msg.encode("utf-8")
             # produce message
             if not self.key:
                 self.producer.send_messages(self.kafka_topic_name, msg)
