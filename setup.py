@@ -3,7 +3,10 @@
 import os
 import sys
 import uuid
-from pip.req import parse_requirements
+try: 
+    from pip._internal.req import parse_requirements
+except ImportError: 
+    from pip.req import parse_requirements
 from codecs import open
 
 
